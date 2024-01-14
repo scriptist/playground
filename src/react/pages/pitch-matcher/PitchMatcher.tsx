@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Oscillator from "./Oscillator";
 import randomItem from "random-item";
+import styled from "@emotion/styled";
 
 const PitchMatcher: React.FC = () => {
   const [isActive, setIsActive] = useState(false);
@@ -10,7 +11,7 @@ const PitchMatcher: React.FC = () => {
   const [showResult, setShowResult] = useState(true);
 
   return (
-    <div>
+    <Root>
       <h1>Pitch Matcher</h1>
       <label>
         <input
@@ -20,7 +21,6 @@ const PitchMatcher: React.FC = () => {
         />
         Active
       </label>
-      <br />
       <input
         max={getFrequencyOfNoteInHz(
           notes[notes.length - 1],
@@ -37,6 +37,37 @@ const PitchMatcher: React.FC = () => {
         type="range"
         value={userPitch}
       />
+      {showResult ? (
+        <>
+          <Button
+            onClick={() => {
+              setShowResult(false);
+              setIsActive(true);
+              setTargetPitch(getRandomFrequency());
+            }}
+          >
+            Reset
+          </Button>
+        </>
+      ) : (
+        <Button
+          onClick={() => {
+            setShowResult(true);
+            setIsActive(false);
+          }}
+        >
+          Submit
+        </Button>
+      )}
+      <h2>
+        Score:{" "}
+        {showResult
+          ? Math.max(
+              0,
+              100 - Math.round(Math.abs(userPitch / targetPitch - 1) * 500)
+            )
+          : "??"}
+      </h2>
       <Oscillator
         pitchHz={userPitch}
         isActive={isActive && isUserSliding}
@@ -47,42 +78,31 @@ const PitchMatcher: React.FC = () => {
         isActive={isActive && !isUserSliding}
         type="sine"
       />
-      <br />
-      {showResult ? (
-        <>
-          <button
-            onClick={() => {
-              setShowResult(false);
-              setIsActive(true);
-              setTargetPitch(getRandomFrequency());
-            }}
-          >
-            Reset
-          </button>
-          <br />
-          <h2>
-            Score:{" "}
-            {Math.max(
-              0,
-              100 - Math.round(Math.abs(userPitch / targetPitch - 1) * 500)
-            )}
-          </h2>
-        </>
-      ) : (
-        <button
-          onClick={() => {
-            setShowResult(true);
-            setIsActive(false);
-          }}
-        >
-          Submit
-        </button>
-      )}
-    </div>
+    </Root>
   );
 };
 
 export default PitchMatcher;
+
+const Root = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+`;
+
+const Button = styled.button`
+  background: #28b;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  cursor: pointer;
+  font: inherit;
+  padding: 1em 2em;
+
+  :hover {
+    background: #269;
+  }
+`;
 
 const notes = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
 const octaves = [4, 5];
