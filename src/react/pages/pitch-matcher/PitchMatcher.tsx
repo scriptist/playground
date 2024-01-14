@@ -8,7 +8,7 @@ const PitchMatcher: React.FC = () => {
   const [userPitch, setUserPitch] = useState(getFrequencyOfNoteInHz("A", 4));
   const [isUserSliding, setIsUserSliding] = useState(false);
   const [targetPitch, setTargetPitch] = useState(() => getRandomFrequency());
-  const [showResult, setShowResult] = useState(true);
+  const [showResult, setShowResult] = useState(false);
 
   return (
     <Root>
@@ -22,6 +22,7 @@ const PitchMatcher: React.FC = () => {
         Active
       </label>
       <input
+        disabled={showResult}
         max={getFrequencyOfNoteInHz(
           notes[notes.length - 1],
           octaves[octaves.length - 1]
