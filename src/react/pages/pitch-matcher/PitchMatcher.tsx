@@ -21,7 +21,7 @@ const PitchMatcher: React.FC = () => {
         />
         Active
       </label>
-      <input
+      <Input
         disabled={showResult}
         max={getFrequencyOfNoteInHz(
           notes[notes.length - 1],
@@ -34,7 +34,6 @@ const PitchMatcher: React.FC = () => {
           setIsActive(true);
         }}
         onPointerUp={() => setIsUserSliding(false)}
-        style={{ width: "500px" }}
         type="range"
         value={userPitch}
       />
@@ -103,6 +102,11 @@ const Button = styled.button`
   :hover {
     background: #269;
   }
+`;
+
+const Input = styled.input`
+  max-width: 90vw;
+  width: 500px;
 `;
 
 const notes = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
