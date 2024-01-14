@@ -1,8 +1,7 @@
 import React from "react";
-import logo from "./logo.svg";
 
-function App() {
+const App: React.FC = () => {
   return <div>Hello</div>;
-}
+};
 
 export default App;
