@@ -12,7 +12,9 @@ const Layout: React.FC = () => {
         <NavLink to="/pitch-matcher">Pitch matcher</NavLink>
       </Nav>
 
-      <Outlet />
+      <Content>
+        <Outlet />
+      </Content>
     </Page>
   );
 };
@@ -37,7 +39,9 @@ const Nav = styled.nav`
   background: #434547;
 `;
 
-const StyledLink = styled(Link)<{
+const StyledLink = styled(Link, {
+  shouldForwardProp: (prop) => !new Set(["isActive", "isHome"]).has(prop),
+})<{
   isActive: boolean;
   isHome: boolean;
 }>`
@@ -63,4 +67,12 @@ const Page = styled.div`
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+`;
+
+const Content = styled.div`
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  height: 100%;
+  flex-grow: 1;
 `;
