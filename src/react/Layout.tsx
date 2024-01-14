@@ -4,7 +4,7 @@ import styled from "@emotion/styled";
 
 const Layout: React.FC = () => {
   return (
-    <div>
+    <Page>
       <Nav>
         <NavLink isHome to="/">
           Playground
@@ -13,7 +13,7 @@ const Layout: React.FC = () => {
       </Nav>
 
       <Outlet />
-    </div>
+    </Page>
   );
 };
 
@@ -57,4 +57,10 @@ const StyledLink = styled(Link)<{
           background:#222;
         }
   `}
+`;
+
+const Page = styled.div`
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 `;
